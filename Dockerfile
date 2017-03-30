@@ -1,6 +1,5 @@
 FROM ubuntu:trusty
 
-
 # Install Firefox build dependencies.
 # Packages are from https://dxr.mozilla.org/mozilla-central/source/python/mozboot/mozboot/debian.py
 RUN sudo apt-get update -q \
@@ -34,14 +33,17 @@ RUN sudo apt-get update -q \
   yasm \
   git
 
+RUN sudo pip install --upgrade mercurial
+
 RUN wget -O bootstrap.py https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py && python bootstrap.py --no-interactive --application-choice=browser
 
 RUN mkdir -p /root/.mozbuild
 
-# RUN git clone --depth 1 https://github.com/mozilla/gecko-dev firefox
-RUN hg clone https://hg.mozilla.org/integration/mozilla-inbound
+# RUN git clone --depth 1 https://github.com/mozilla/gecko-dev gecko
+# RUN hg clone https://hg.mozilla.org/integration/mozilla-inbound gecko
+RUN hg clone https://hg.mozilla.org/integration/autoland gecko
 
-WORKDIR mozilla-inbound
+WORKDIR gecko
 
 ADD .mozconfig ./.mozconfig
 RUN sudo chmod +x .mozconfig

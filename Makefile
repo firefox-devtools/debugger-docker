@@ -1,6 +1,6 @@
 
 build:
-	docker build -t jasonlaster11/local-mc5 .
+	docker build -t jryans/debugger-gecko .
 
 publish:
-	docker push jasonlaster11/local-mc5
+	docker push jryans/debugger-gecko
